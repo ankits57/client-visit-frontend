@@ -652,7 +652,18 @@ footer span {
     padding: 9px 10px;
   }
   .dashboard-sidebar-footer {
+    display: block;
+    margin-top: 18px;
+  }
+  .dashboard-sidebar-label {
     display: none;
+  }
+  .dashboard-logout {
+    width: auto;
+    min-width: 100%;
+    padding: 11px 10px;
+    border-top: 1px solid #37433d;
+    font-size: 12px;
   }
   .dashboard-main {
     padding: 28px 20px;
@@ -672,14 +683,38 @@ footer span {
   }
   .auth-card {
     min-height: 100vh;
-    padding: 28px 24px;
+    display: block;
+    padding: 24px 20px 42px;
     align-items: flex-start;
   }
   .auth-brand-mobile {
     display: block;
-    margin-bottom: 62px;
+    margin-bottom: 54px;
     color: #17201d;
     font-weight: 800;
+  }
+  .auth-content {
+    max-width: none;
+  }
+  .auth-content h2 {
+    font-size: 34px;
+    line-height: 1.08;
+  }
+  .auth-subtitle {
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+  .auth-content input {
+    min-height: 46px;
+    font-size: 16px !important;
+  }
+  .auth-content button {
+    min-height: 48px;
+    margin-top: 16px;
+  }
+  .auth-content form > p {
+    font-size: 13px;
+    line-height: 1.6;
   }
 }
 
