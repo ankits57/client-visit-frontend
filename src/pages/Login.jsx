@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
 import AuthLayout from "../components/AuthLayout";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,8 +29,7 @@ const Login = () => {
 
       const { token, user } = response.data;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      login(user, token);
 
       navigate("/dashboard");
     } catch (err) {
