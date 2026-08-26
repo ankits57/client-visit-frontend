@@ -455,7 +455,7 @@ const VisitDetails = () => {
 
   return (
     <DashboardLayout>
-      <div>
+      <div className="visit-details-page">
         <button onClick={() => navigate("/visits")} style={styles.backButton}>
           ← Back to Visits
         </button>

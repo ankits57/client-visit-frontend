@@ -1182,4 +1182,52 @@ footer span {
     width: 100%;
     justify-content: space-between;
   }
+  .home-hero-actions {
+    flex-wrap: wrap;
+  }
+  .home-features-grid,
+  .home-how > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+  .home-how > div:last-child > div {
+    border-right: 0 !important;
+  }
+  .workspace-form .row {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  .workspace-form .actions {
+    flex-wrap: wrap;
+  }
+  .workspace-form .actions button {
+    flex: 1;
+    min-width: 120px;
+  }
+  .visit-details-page > div[style] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px;
+  }
+  .visit-details-page > div[style] > div[style] {
+    align-items: flex-start !important;
+  }
+  .visit-details-page > div[style] > div[style] + div[style] {
+    align-items: stretch !important;
+  }
+  .visit-details-page [style*="justify-content: space-between"] {
+    flex-wrap: wrap !important;
+    gap: 12px;
+  }
+  .visit-details-page [style*="display: flex"] input,
+  .visit-details-page [style*="display: flex"] select {
+    min-width: 0;
+  }
+  .visit-details-page [style*="display: flex"] {
+    max-width: 100%;
+  }
+  .visit-details-page input,
+  .visit-details-page textarea,
+  .visit-details-page select {
+    max-width: 100%;
+  }
 }
