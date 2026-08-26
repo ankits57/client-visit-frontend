@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 import api from "../api/axios";
 import "../App.css";
 
 const PublicVisit = () => {
   const { token } = useParams();
-
+  const publicUrl = window.location.href;
+  const [showQR, setShowQR] = useState(false);
   const [visit, setVisit] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -54,6 +56,24 @@ const PublicVisit = () => {
 
   return (
     <div className="public-visit-page">
+      <div className="public-visit-qr">
+        <button
+          onClick={() => setShowQR((current) => !current)}
+          className="qr-toggle"
+        >
+          {showQR ? "Hide QR code" : "Show visit QR code"}
+        </button>
+
+        {showQR && (
+          <div className="qr-container">
+            <div className="qr-box">
+              <QRCode value={publicUrl} size={180} />
+            </div>
+
+            <p className="qr-text">Scan to open this visit page.</p>
+          </div>
+        )}
+      </div>
       <main className="public-visit-container">
         <header className="visit-hero">
           <div className="hero-topline">

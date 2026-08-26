@@ -312,6 +312,59 @@ footer span {
 .public-visit-state p {
   color: #68706a;
 }
+.public-visit-qr {
+  max-width: 1080px;
+  margin: 0 auto 18px;
+  text-align: right;
+}
+.qr-toggle {
+  padding: 11px 15px;
+  color: #17201d;
+  background: #d8e56d;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  font:
+    700 11px "Manrope",
+    sans-serif;
+}
+.qr-toggle:hover {
+  background: #e9b39d;
+}
+.qr-container {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 22px;
+  background: #fffdf8;
+  border: 1px solid #e2dbcf;
+  border-radius: 3px;
+  text-align: center;
+}
+.qr-box {
+  display: inline-flex;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid #e2dbcf;
+  border-radius: 2px;
+}
+.qr-box svg {
+  display: block;
+  width: min(180px, 60vw);
+  height: auto;
+}
+.qr-text {
+  margin: 0;
+  color: #737b73;
+  font-size: 12px;
+}
+.visit-details-page .qr-container {
+  max-width: 280px;
+}
+.visit-details-page .qr-box svg {
+  width: min(220px, 60vw);
+}
 .loading-mark {
   width: 32px;
   height: 32px;
