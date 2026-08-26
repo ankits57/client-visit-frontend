@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "../App.css";
 
 const DashboardLayout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -11,33 +12,43 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div style={styles.container}>
-      {/* Sidebar */}
-      <aside style={styles.sidebar}>
-        <h2 style={styles.logo}>Client Visits</h2>
+    <div className="dashboard-shell">
+      <aside className="dashboard-sidebar">
+        <Link to="/dashboard" className="dashboard-brand">
+          <span className="dashboard-brand-mark">CV</span>
+          <span>ClientVisit</span>
+        </Link>
 
-        <nav style={styles.nav}>
-          <Link to="/dashboard" style={styles.link}>
-            Dashboard
+        <nav className="dashboard-nav">
+          <Link to="/dashboard" className="dashboard-nav-link">
+            Overview
           </Link>
-
-          <Link to="/visits" style={styles.link}>
-            Visits
+          <Link to="/visits" className="dashboard-nav-link">
+            All visits
           </Link>
         </nav>
 
-        <button onClick={handleLogout} style={styles.logoutButton}>
-          Logout
-        </button>
+        <div className="dashboard-sidebar-footer">
+          <span className="dashboard-sidebar-label">Workspace</span>
+          <button onClick={handleLogout} className="dashboard-logout">
+            Sign out <span>↗</span>
+          </button>
+        </div>
       </aside>
 
-      {/* Main Content */}
-      <main style={styles.main}>
-        <header style={styles.header}>
+      <main className="dashboard-main">
+        <header className="dashboard-header">
           <div>
-            <h1>Welcome, {user?.name} 👋</h1>
-
-            <p>Manage your client visits and schedules.</p>
+            <span className="dashboard-kicker">Client operations</span>
+            <h1>Good to see you, {user?.name}</h1>
+            <p>Everything for your next client visit, in one place.</p>
+          </div>
+          <div className="dashboard-user">
+            <span>{user?.name?.charAt(0) || "U"}</span>
+            <div>
+              <strong>{user?.name}</strong>
+              <small>Workspace owner</small>
+            </div>
           </div>
         </header>
 
@@ -45,57 +56,6 @@ const DashboardLayout = ({ children }) => {
       </main>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    minHeight: "100vh",
-    background: "#f5f6fa",
-  },
-
-  sidebar: {
-    width: "240px",
-    background: "#1e293b",
-    color: "white",
-    padding: "25px",
-    display: "flex",
-    flexDirection: "column",
-  },
-
-  logo: {
-    marginBottom: "40px",
-  },
-
-  nav: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  },
-
-  link: {
-    color: "white",
-    textDecoration: "none",
-    padding: "10px",
-    borderRadius: "6px",
-  },
-
-  logoutButton: {
-    marginTop: "auto",
-    padding: "10px",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-
-  main: {
-    flex: 1,
-    padding: "40px",
-  },
-
-  header: {
-    marginBottom: "30px",
-  },
 };
 
 export default DashboardLayout;

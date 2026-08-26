@@ -12,26 +12,28 @@ const Dashboard = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const fetchVisits = async () => {
+      try {
+        setLoading(true);
+
+        const response = await api.get("/visits");
+
+        console.log("Dashboard visits:", response.data);
+
+        setVisits(response.data.visits || []);
+      } catch (err) {
+        console.error(err);
+
+        setError(
+          err.response?.data?.message || "Failed to load dashboard data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchVisits();
   }, []);
-
-  const fetchVisits = async () => {
-    try {
-      setLoading(true);
-
-      const response = await api.get("/visits");
-
-      console.log("Dashboard visits:", response.data);
-
-      setVisits(response.data.visits || []);
-    } catch (err) {
-      console.error(err);
-
-      setError(err.response?.data?.message || "Failed to load dashboard data");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const totalVisits = visits.length;
 
@@ -66,43 +68,42 @@ const Dashboard = () => {
   return (
     <DashboardLayout>
       <div>
-        <h1>Dashboard</h1>
-
-        <p>Manage your client visits and schedules.</p>
+        <div className="page-intro">
+          <span className="eyebrow">Overview</span>
+          <h2>Your visit workspace</h2>
+          <p>Keep every client experience moving with clarity.</p>
+        </div>
 
         {/* Stats */}
 
-        <div style={styles.statsGrid}>
-          <div style={styles.statCard}>
-            <p style={styles.statLabel}>Total Visits</p>
+        <div className="dashboard-stats">
+          <div className="dashboard-stat">
+            <p>Total visits</p>
             <h2>{totalVisits}</h2>
           </div>
-
-          <div style={styles.statCard}>
-            <p style={styles.statLabel}>Upcoming</p>
+          <div className="dashboard-stat stat-lime">
+            <p>Upcoming</p>
             <h2>{upcomingVisits}</h2>
           </div>
-
-          <div style={styles.statCard}>
-            <p style={styles.statLabel}>Active</p>
+          <div className="dashboard-stat stat-coral">
+            <p>Active now</p>
             <h2>{activeVisits}</h2>
           </div>
-
-          <div style={styles.statCard}>
-            <p style={styles.statLabel}>Completed</p>
+          <div className="dashboard-stat">
+            <p>Completed</p>
             <h2>{completedVisits}</h2>
           </div>
         </div>
 
         {/* Recent Visits */}
 
-        <div style={styles.section}>
-          <div style={styles.sectionHeader}>
+        <div className="dashboard-panel">
+          <div className="panel-heading">
             <h2>Recent Visits</h2>
 
             <button
               onClick={() => navigate("/visits")}
-              style={styles.viewButton}
+              className="quiet-button"
             >
               View All →
             </button>
@@ -114,7 +115,7 @@ const Dashboard = () => {
             visits.slice(0, 5).map((visit) => (
               <div
                 key={visit._id}
-                style={styles.visitCard}
+                className="dashboard-visit-row"
                 onClick={() => navigate(`/visits/${visit._id}`)}
               >
                 <div>
@@ -122,12 +123,16 @@ const Dashboard = () => {
 
                   <p>{visit.clientCompany}</p>
 
-                  <p style={styles.date}>
-                    📅 {new Date(visit.startDate).toLocaleDateString()}
+                  <p className="muted-line">
+                    {new Date(visit.startDate).toLocaleDateString()}
                   </p>
                 </div>
 
-                <span style={styles.status}>{visit.status}</span>
+                <span
+                  className={`status-pill status-${visit.status.toLowerCase()}`}
+                >
+                  {visit.status}
+                </span>
               </div>
             ))
           )}
@@ -135,70 +140,6 @@ const Dashboard = () => {
       </div>
     </DashboardLayout>
   );
-};
-
-const styles = {
-  statsGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-    gap: "20px",
-    marginTop: "30px",
-    marginBottom: "30px",
-  },
-
-  statCard: {
-    background: "white",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-  },
-
-  statLabel: {
-    color: "#6b7280",
-    marginBottom: "8px",
-  },
-
-  section: {
-    background: "white",
-    padding: "25px",
-    borderRadius: "10px",
-  },
-
-  sectionHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
-  },
-
-  viewButton: {
-    border: "none",
-    background: "none",
-    color: "#2563eb",
-    cursor: "pointer",
-    fontSize: "14px",
-  },
-
-  visitCard: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "15px",
-    borderBottom: "1px solid #eee",
-    cursor: "pointer",
-  },
-
-  date: {
-    color: "#6b7280",
-    fontSize: "14px",
-  },
-
-  status: {
-    background: "#e0e7ff",
-    padding: "6px 10px",
-    borderRadius: "15px",
-    fontSize: "12px",
-  },
 };
 
 export default Dashboard;

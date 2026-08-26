@@ -48,12 +48,17 @@ const CreateVisit = () => {
 
   return (
     <DashboardLayout>
-      <div style={styles.container}>
+      <div className="workspace-form-page" style={styles.container}>
+        <span className="eyebrow">New itinerary</span>
         <h2>Create Client Visit</h2>
 
         <p>Set up the details for an upcoming client visit.</p>
 
-        <form onSubmit={handleSubmit} style={styles.form}>
+        <form
+          onSubmit={handleSubmit}
+          className="workspace-form"
+          style={styles.form}
+        >
           <div style={styles.field}>
             <label>Visit Title</label>
 

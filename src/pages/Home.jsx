@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import "../App.css";
 
 const Home = () => {
   return (
-    <div style={styles.page}>
+    <div className="home-page" style={styles.page}>
       {/* Navbar */}
-      <nav style={styles.navbar}>
+      <nav className="home-navbar" style={styles.navbar}>
         <Link to="/" style={styles.logo}>
           <div style={styles.logoIcon}>CV</div>
           <span>ClientVisit</span>
@@ -22,7 +23,7 @@ const Home = () => {
       </nav>
 
       {/* Hero */}
-      <section style={styles.hero}>
+      <section className="home-hero" style={styles.hero}>
         <div style={styles.heroContent}>
           <div style={styles.badge}>✨ Simplify every client visit</div>
 
@@ -52,12 +53,12 @@ const Home = () => {
         </div>
 
         {/* Hero visual */}
-        <div style={styles.heroVisual}>
+        <div className="home-hero-visual" style={styles.heroVisual}>
           <div style={styles.dashboardCard}>
             <div style={styles.cardHeader}>
               <div>
-                <p style={styles.smallText}>UPCOMING VISIT</p>
-                <h3 style={styles.cardTitle}>BFL Client Visit</h3>
+                <p style={styles.smallText}>VISIT OVERVIEW</p>
+                <h3 style={styles.cardTitle}>Your next client visit</h3>
               </div>
 
               <span style={styles.status}>UPCOMING</span>
@@ -65,17 +66,17 @@ const Home = () => {
 
             <div style={styles.infoRow}>
               <span>📅</span>
-              <span>August 26 – August 28</span>
+              <span>Dates and schedule</span>
             </div>
 
             <div style={styles.infoRow}>
               <span>👥</span>
-              <span>4 Visitors</span>
+              <span>Guest details</span>
             </div>
 
             <div style={styles.infoRow}>
               <span>📍</span>
-              <span>Bangalore Office</span>
+              <span>Location details</span>
             </div>
 
             <div style={styles.divider} />
@@ -103,8 +104,8 @@ const Home = () => {
       </section>
 
       {/* Features */}
-      <section style={styles.featuresSection}>
-        <div style={styles.sectionHeading}>
+      <section className="home-features" style={styles.featuresSection}>
+        <div className="home-features-heading" style={styles.sectionHeading}>
           <p style={styles.sectionLabel}>FEATURES</p>
 
           <h2>Everything you need for a smooth client visit</h2>
@@ -115,7 +116,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div style={styles.featuresGrid}>
+        <div className="home-features-grid" style={styles.featuresGrid}>
           <Feature
             icon="📅"
             title="Visit Planning"
@@ -155,7 +156,7 @@ const Home = () => {
       </section>
 
       {/* How it works */}
-      <section style={styles.howSection}>
+      <section className="home-how" style={styles.howSection}>
         <div style={styles.sectionHeading}>
           <p style={styles.sectionLabel}>HOW IT WORKS</p>
 
@@ -184,7 +185,7 @@ const Home = () => {
       </section>
 
       {/* CTA */}
-      <section style={styles.cta}>
+      <section className="home-cta" style={styles.cta}>
         <h2>Ready to make client visits easier?</h2>
 
         <p>Start organizing better client experiences today.</p>
@@ -195,7 +196,7 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer style={styles.footer}>
+      <footer className="home-footer" style={styles.footer}>
         <div style={styles.footerLogo}>
           <div style={styles.logoIcon}>CV</div>
           ClientVisit
@@ -209,7 +210,7 @@ const Home = () => {
 
 const Feature = ({ icon, title, description }) => {
   return (
-    <div style={styles.featureCard}>
+    <div className="home-feature" style={styles.featureCard}>
       <div style={styles.featureIcon}>{icon}</div>
 
       <h3>{title}</h3>

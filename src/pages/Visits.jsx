@@ -12,27 +12,27 @@ const Visits = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchVisits = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await api.get("/visits");
+
+        console.log(response.data);
+
+        setVisits(response.data.visits);
+      } catch (err) {
+        console.error(err);
+
+        setError(err.response?.data?.message || "Failed to load visits");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchVisits();
   }, []);
-
-  const fetchVisits = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const response = await api.get("/visits");
-
-      console.log(response.data);
-
-      setVisits(response.data.visits);
-    } catch (err) {
-      console.error(err);
-
-      setError(err.response?.data?.message || "Failed to load visits");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -45,32 +45,34 @@ const Visits = () => {
   return (
     <DashboardLayout>
       <div>
-        <div style={styles.header}>
+        <div className="page-intro visits-intro">
           <div>
-            <h2>Client Visits</h2>
-            <p>Manage upcoming client visits.</p>
+            <span className="eyebrow">Your workspace</span>
+            <h2>Client visits</h2>
+            <p>Plan, share, and host every visit from one place.</p>
           </div>
 
           <button
-            style={styles.createButton}
+            className="primary-button"
             onClick={() => navigate("/visits/create")}
           >
             + Create Visit
           </button>
         </div>
 
-        {error && <p style={styles.error}>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
 
         {visits.length === 0 ? (
-          <div style={styles.empty}>
+          <div className="empty-panel">
             <h3>No visits yet</h3>
             <p>Create your first client visit.</p>
           </div>
         ) : (
-          <div style={styles.list}>
+          <div className="visits-list">
             {visits.map((visit) => (
-              <div key={visit._id} style={styles.visitCard}>
+              <div key={visit._id} className="visit-list-row">
                 <div>
+                  <span className="eyebrow">{visit.status}</span>
                   <h3>{visit.title}</h3>
 
                   <p>{visit.clientCompany}</p>
@@ -82,11 +84,15 @@ const Visits = () => {
                   </p>
                 </div>
 
-                <div style={styles.right}>
-                  <span style={styles.status}>{visit.status}</span>
+                <div className="visit-list-actions">
+                  <span
+                    className={`status-pill status-${visit.status.toLowerCase()}`}
+                  >
+                    {visit.status}
+                  </span>
 
                   <button
-                    style={styles.viewButton}
+                    className="quiet-button"
                     onClick={() => navigate(`/visits/${visit._id}`)}
                   >
                     View →
@@ -99,73 +105,6 @@ const Visits = () => {
       </div>
     </DashboardLayout>
   );
-};
-
-const styles = {
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "30px",
-  },
-
-  createButton: {
-    padding: "12px 18px",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-    background: "#2563eb",
-    color: "white",
-    fontWeight: "bold",
-  },
-
-  list: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  },
-
-  visitCard: {
-    background: "white",
-    padding: "20px",
-    borderRadius: "10px",
-    display: "flex",
-    justifyContent: "space-between",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-  },
-
-  right: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    gap: "15px",
-  },
-
-  status: {
-    padding: "5px 10px",
-    background: "#e0e7ff",
-    borderRadius: "20px",
-    fontSize: "12px",
-  },
-
-  viewButton: {
-    border: "none",
-    background: "none",
-    cursor: "pointer",
-    color: "#2563eb",
-    fontWeight: "bold",
-  },
-
-  empty: {
-    background: "white",
-    padding: "40px",
-    borderRadius: "10px",
-    textAlign: "center",
-  },
-
-  error: {
-    color: "red",
-  },
 };
 
 export default Visits;

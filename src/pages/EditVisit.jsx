@@ -27,34 +27,34 @@ const EditVisit = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const fetchVisit = async () => {
+      try {
+        const response = await api.get(`/visits/${visitId}`);
+
+        const visit = response.data.visit;
+
+        setFormData({
+          title: visit.title || "",
+          clientCompany: visit.clientCompany || "",
+          description: visit.description || "",
+          startDate: visit.startDate ? visit.startDate.split("T")[0] : "",
+          endDate: visit.endDate ? visit.endDate.split("T")[0] : "",
+          officeLocation: {
+            name: visit.officeLocation?.name || "",
+            address: visit.officeLocation?.address || "",
+            mapUrl: visit.officeLocation?.mapUrl || "",
+          },
+          status: visit.status || "UPCOMING",
+        });
+      } catch (err) {
+        setError(err.response?.data?.message || "Failed to load visit");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchVisit();
   }, [visitId]);
-
-  const fetchVisit = async () => {
-    try {
-      const response = await api.get(`/visits/${visitId}`);
-
-      const visit = response.data.visit;
-
-      setFormData({
-        title: visit.title || "",
-        clientCompany: visit.clientCompany || "",
-        description: visit.description || "",
-        startDate: visit.startDate ? visit.startDate.split("T")[0] : "",
-        endDate: visit.endDate ? visit.endDate.split("T")[0] : "",
-        officeLocation: {
-          name: visit.officeLocation?.name || "",
-          address: visit.officeLocation?.address || "",
-          mapUrl: visit.officeLocation?.mapUrl || "",
-        },
-        status: visit.status || "UPCOMING",
-      });
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to load visit");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,7 +94,7 @@ const EditVisit = () => {
 
   return (
     <DashboardLayout>
-      <div style={styles.container}>
+      <div className="workspace-form-page" style={styles.container}>
         <button
           onClick={() => navigate(`/visits/${visitId}`)}
           style={styles.backButton}
@@ -102,7 +102,7 @@ const EditVisit = () => {
           ← Back to Visit
         </button>
 
-        <div style={styles.card}>
+        <div className="workspace-form" style={styles.card}>
           <h2>Edit Visit</h2>
 
           <p style={styles.subtitle}>Update the client visit details.</p>
