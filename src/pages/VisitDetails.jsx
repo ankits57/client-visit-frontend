@@ -460,19 +460,41 @@ const VisitDetails = () => {
           ← Back to Visits
         </button>
 
+        <button
+          onClick={() => navigate(`/visits/${visitId}/edit`)}
+          style={styles.editButton}
+        >
+          ✏️ Edit Visit
+        </button>
+
         <div style={styles.header}>
           <div>
             <h2>{visit.title}</h2>
-
             <p>{visit.clientCompany}</p>
-
             <p>
               📅 {new Date(visit.startDate).toLocaleDateString()}
               {" - "}
               {new Date(visit.endDate).toLocaleDateString()}
             </p>
+            {visit.officeLocation && (
+              <div>
+                <p>📍 {visit.officeLocation.name || "Office location"}</p>
 
-            <p>📍 {visit.officeLocation}</p>
+                {visit.officeLocation.address && (
+                  <p>{visit.officeLocation.address}</p>
+                )}
+
+                {visit.officeLocation.mapUrl && (
+                  <a
+                    href={visit.officeLocation.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open in Google Maps →
+                  </a>
+                )}
+              </div>
+            )}{" "}
           </div>
 
           <div style={styles.headerActions}>
@@ -1075,6 +1097,15 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "25px",
+  },
+  editButton: {
+    marginLeft: "15px",
+    padding: "8px 14px",
+    border: "none",
+    background: "#2563eb",
+    color: "white",
+    borderRadius: "6px",
+    cursor: "pointer",
   },
 
   status: {

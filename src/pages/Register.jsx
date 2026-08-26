@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import AuthLayout from "../components/AuthLayout";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,23 +21,17 @@ const Login = () => {
       setLoading(true);
       setError("");
 
-      const response = await api.post("/auth/login", {
+      await api.post("/auth/register", {
+        name,
         email,
         password,
       });
 
-      const { token, user } = response.data;
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      navigate("/dashboard");
+      navigate("/login");
     } catch (err) {
       console.error(err);
 
-      setError(
-        err.response?.data?.message || "Unable to login. Please try again.",
-      );
+      setError(err.response?.data?.message || "Unable to create account.");
     } finally {
       setLoading(false);
     }
@@ -44,18 +39,31 @@ const Login = () => {
 
   return (
     <AuthLayout
-      title="Welcome back 👋"
-      subtitle="Sign in to manage your client visits."
+      title="Create your account 🚀"
+      subtitle="Start managing client visits in one place."
     >
       <form onSubmit={handleSubmit}>
         {error && <div style={styles.error}>{error}</div>}
+
+        <div style={styles.formGroup}>
+          <label>Full Name</label>
+
+          <input
+            type="text"
+            placeholder="John Doe"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={styles.input}
+            required
+          />
+        </div>
 
         <div style={styles.formGroup}>
           <label>Email</label>
 
           <input
             type="email"
-            placeholder="you@company.com"
+            placeholder="john@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             style={styles.input}
@@ -68,11 +76,12 @@ const Login = () => {
 
           <input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Minimum 6 characters"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={styles.input}
             required
+            minLength="6"
           />
         </div>
 
@@ -84,11 +93,11 @@ const Login = () => {
             opacity: loading ? 0.7 : 1,
           }}
         >
-          {loading ? "Signing in..." : "Sign In"}
+          {loading ? "Creating account..." : "Create Account"}
         </button>
 
         <p style={styles.footer}>
-          Don't have an account? <Link to="/register">Create account</Link>
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
       </form>
     </AuthLayout>
@@ -139,4 +148,4 @@ const styles = {
   },
 };
 
-export default Login;
+export default Register;

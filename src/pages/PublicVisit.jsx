@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import api from "../api/axios";
+import "../App.css";
 
 const PublicVisit = () => {
   const { token } = useParams();
@@ -11,178 +12,206 @@ const PublicVisit = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const fetchPublicVisit = async () => {
+      try {
+        setLoading(true);
+
+        const response = await api.get(`/visits/public/${token}`);
+
+        setVisit(response.data.visit);
+      } catch (err) {
+        console.error(err);
+
+        setError(
+          err.response?.data?.message || "Unable to load visit information",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPublicVisit();
   }, [token]);
 
-  const fetchPublicVisit = async () => {
-    try {
-      setLoading(true);
-
-      const response = await api.get(`/visits/public/${token}`);
-
-      setVisit(response.data.visit);
-    } catch (err) {
-      console.error(err);
-
-      setError(
-        err.response?.data?.message || "Unable to load visit information",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (loading) {
-    return <div style={styles.center}>Loading visit information...</div>;
+    return (
+      <div className="public-visit-state">
+        <div className="loading-mark" />
+        <p>Preparing your visit guide...</p>
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <div style={styles.center}>
-        <h2>Oops!</h2>
+      <div className="public-visit-state">
+        <span className="eyebrow">Visit guide</span>
+        <h2>We couldn&apos;t find this visit</h2>
         <p>{error}</p>
       </div>
     );
   }
 
   return (
-    <div style={styles.container}>
-      {/* Header */}
-
-      <div style={styles.hero}>
-        <h1>{visit.title}</h1>
-
-        <p style={styles.company}>Welcome, {visit.clientCompany} 👋</p>
-
-        <p>
-          📅 {new Date(visit.startDate).toLocaleDateString()} -{" "}
-          {new Date(visit.endDate).toLocaleDateString()}
-        </p>
-      </div>
-
-      {/* Agenda */}
-
-      <section style={styles.section}>
-        <h2>📅 Agenda</h2>
-
-        {!visit.agenda || visit.agenda.length === 0 ? (
-          <p>No agenda has been added yet.</p>
-        ) : (
-          visit.agenda.map((item) => (
-            <div key={item._id} style={styles.card}>
-              <h3>{item.title}</h3>
-
-              {item.description && <p>{item.description}</p>}
-
-              <p>📅 {new Date(item.date).toLocaleDateString()}</p>
-
-              <p>
-                🕒 {item.startTime} - {item.endTime}
-              </p>
+    <div className="public-visit-page">
+      <main className="public-visit-container">
+        <header className="visit-hero">
+          <div className="hero-topline">
+            <span className="brand-mark">FIELD NOTES</span>
+            <span className="hero-status">
+              <span /> Guest guide
+            </span>
+          </div>
+          <div className="hero-content">
+            <span className="eyebrow">Your itinerary</span>
+            <h1>{visit.title}</h1>
+            <p className="hero-welcome">Welcome, {visit.clientCompany}</p>
+            <div className="visit-dates">
+              <span>01</span>
+              {new Date(visit.startDate).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+              <i />
+              <span>02</span>
+              {new Date(visit.endDate).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
             </div>
-          ))
-        )}
-      </section>
+          </div>
+        </header>
 
-      {/* Live Updates */}
+        <section className="location-panel">
+          <div className="section-icon">+</div>
+          <div>
+            <span className="eyebrow">Where to go</span>
+            <h2>{visit.officeLocation?.name || "Visit location"}</h2>
+            <p>
+              {visit.officeLocation?.address ||
+                "Location details will be shared soon."}
+            </p>
+          </div>
+          {visit.officeLocation?.mapUrl && (
+            <a
+              className="text-link"
+              href={visit.officeLocation.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open map <span>↗</span>
+            </a>
+          )}
+        </section>
 
-      <section style={styles.section}>
-        <h2>📢 Live Updates</h2>
-
-        {!visit.updates || visit.updates.length === 0 ? (
-          <p>No updates at the moment.</p>
-        ) : (
-          visit.updates.map((update) => (
-            <div key={update._id} style={styles.card}>
-              <h3>{update.title}</h3>
-
-              <p>{update.message}</p>
-
-              <span style={styles.badge}>{update.type}</span>
+        <div className="visit-grid">
+          <section className="visit-section">
+            <div className="section-heading">
+              <div>
+                <span className="eyebrow">The schedule</span>
+                <h2>Agenda</h2>
+              </div>
+              <span className="section-count">
+                {visit.agenda?.length || 0} items
+              </span>
             </div>
-          ))
-        )}
-      </section>
+            {!visit.agenda || visit.agenda.length === 0 ? (
+              <div className="empty-state">No agenda has been added yet.</div>
+            ) : (
+              <div className="agenda-list">
+                {visit.agenda.map((item, index) => (
+                  <div key={item._id} className="agenda-item">
+                    <span className="agenda-index">0{index + 1}</span>
+                    <div>
+                      <h3>{item.title}</h3>
+                      {item.description && <p>{item.description}</p>}
+                    </div>
+                    <div className="agenda-time">
+                      <strong>{item.startTime}</strong>
+                      <span>
+                        {new Date(item.date).toLocaleDateString(undefined, {
+                          weekday: "short",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
 
-      {/* Nearby Places */}
-
-      <section style={styles.section}>
-        <h2>📍 Nearby Places</h2>
-
-        {!visit.places || visit.places.length === 0 ? (
-          <p>No nearby places added yet.</p>
-        ) : (
-          visit.places.map((place) => (
-            <div key={place._id} style={styles.card}>
-              <h3>{place.name}</h3>
-
-              <p>{place.category}</p>
-
-              <p>{place.address}</p>
-
-              {place.distance && <p>📏 {place.distance}</p>}
-
-              {place.mapUrl && (
-                <a href={place.mapUrl} target="_blank" rel="noreferrer">
-                  📍 Open in Maps
-                </a>
+          <aside className="side-column">
+            <section className="visit-section updates-section">
+              <div className="section-heading">
+                <div>
+                  <span className="eyebrow">Stay current</span>
+                  <h2>Live updates</h2>
+                </div>
+              </div>
+              {!visit.updates || visit.updates.length === 0 ? (
+                <div className="empty-state">No updates at the moment.</div>
+              ) : (
+                visit.updates.map((update) => (
+                  <div key={update._id} className="update-item">
+                    <span className="update-dot" />
+                    <div>
+                      <span className="badge">{update.type}</span>
+                      <h3>{update.title}</h3>
+                      <p>{update.message}</p>
+                    </div>
+                  </div>
+                ))
               )}
-            </div>
-          ))
-        )}
-      </section>
+            </section>
+
+            <section className="visit-section places-section">
+              <div className="section-heading">
+                <div>
+                  <span className="eyebrow">Make yourself at home</span>
+                  <h2>Nearby</h2>
+                </div>
+              </div>
+              {!visit.places || visit.places.length === 0 ? (
+                <div className="empty-state">No nearby places added yet.</div>
+              ) : (
+                visit.places.map((place) => (
+                  <div key={place._id} className="place-item">
+                    <div>
+                      <h3>{place.name}</h3>
+                      <p>
+                        {place.category}{" "}
+                        {place.distance && `· ${place.distance}`}
+                      </p>
+                      <p>{place.address}</p>
+                    </div>
+                    {place.mapUrl && (
+                      <a
+                        className="circle-link"
+                        href={place.mapUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open ${place.name} in maps`}
+                      >
+                        ↗
+                      </a>
+                    )}
+                  </div>
+                ))
+              )}
+            </section>
+          </aside>
+        </div>
+        <footer>
+          Prepared for {visit.clientCompany} <span>·</span> Have a wonderful
+          visit
+        </footer>
+      </main>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: "900px",
-    margin: "0 auto",
-    padding: "20px",
-    background: "#f5f7fb",
-    minHeight: "100vh",
-  },
-
-  center: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  hero: {
-    background: "#2563eb",
-    color: "white",
-    padding: "35px",
-    borderRadius: "15px",
-    marginBottom: "25px",
-  },
-
-  company: {
-    fontSize: "20px",
-  },
-
-  section: {
-    marginBottom: "30px",
-  },
-
-  card: {
-    background: "white",
-    padding: "20px",
-    borderRadius: "12px",
-    marginTop: "12px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-  },
-
-  badge: {
-    display: "inline-block",
-    padding: "5px 10px",
-    background: "#e5e7eb",
-    borderRadius: "15px",
-    fontSize: "12px",
-  },
 };
 
 export default PublicVisit;

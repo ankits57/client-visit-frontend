@@ -10,9 +10,11 @@ import VisitDetails from "./pages/VisitDetails";
 
 import PublicVisit from "./pages/PublicVisit";
 
-function Home() {
-  return <h1>Client Visit Management</h1>;
-}
+import Register from "./pages/Register";
+
+import Home from "./pages/Home";
+
+import EditVisit from "./pages/EditVisit";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         <Route path="/visit/:token" element={<PublicVisit />} />
 
@@ -46,6 +49,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CreateVisit />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/visits/:visitId/edit"
+          element={
+            <ProtectedRoute>
+              <EditVisit />
             </ProtectedRoute>
           }
         />

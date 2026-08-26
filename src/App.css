@@ -1,0 +1,369 @@
+.public-visit-page {
+  min-height: 100vh;
+  background: #f4f0e8;
+  background-image: radial-gradient(#d9d2c6 0.7px, transparent 0.7px);
+  background-size: 18px 18px;
+  padding: 34px 20px 60px;
+}
+
+.public-visit-container {
+  max-width: 1080px;
+  margin: auto;
+}
+
+.visit-hero {
+  min-height: 430px;
+  padding: 28px 42px 44px;
+  color: #f9f6ef;
+  background: #17201d;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.visit-hero::after {
+  content: "";
+  width: 350px;
+  height: 350px;
+  border: 1px solid #d8e56d;
+  border-radius: 50%;
+  position: absolute;
+  right: -100px;
+  bottom: -155px;
+  box-shadow:
+    0 0 0 28px #17201d,
+    0 0 0 29px #39423d,
+    0 0 0 78px #17201d,
+    0 0 0 79px #39423d;
+  opacity: 0.7;
+}
+
+.hero-topline,
+.hero-status,
+.visit-dates,
+.section-heading,
+.location-panel,
+.place-item {
+  display: flex;
+  align-items: center;
+}
+.hero-topline {
+  justify-content: space-between;
+  border-bottom: 1px solid #3e4943;
+  padding-bottom: 22px;
+}
+.brand-mark,
+.eyebrow,
+.section-count,
+.hero-status,
+.agenda-index,
+.badge,
+footer {
+  font:
+    500 10px "DM Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.brand-mark {
+  color: #d8e56d;
+}
+.hero-status {
+  gap: 8px;
+  color: #b4bdb7;
+}
+.hero-status span,
+.update-dot {
+  width: 7px;
+  height: 7px;
+  background: #d8e56d;
+  border-radius: 50%;
+  display: inline-block;
+}
+.hero-content {
+  max-width: 660px;
+  padding-top: 84px;
+  position: relative;
+  z-index: 1;
+}
+.eyebrow {
+  color: #9a6551;
+  display: block;
+}
+.visit-hero .eyebrow {
+  color: #d8e56d;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+h1,
+h2 {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+}
+h1 {
+  font-size: clamp(44px, 7vw, 82px);
+  line-height: 0.98;
+  letter-spacing: 0;
+  margin: 13px 0 20px;
+  max-width: 720px;
+}
+.hero-welcome {
+  color: #c6cdc8;
+  font-size: 17px;
+}
+.visit-dates {
+  gap: 11px;
+  color: #f9f6ef;
+  font:
+    14px "DM Mono",
+    monospace;
+  margin-top: 42px;
+}
+.visit-dates span {
+  color: #d8e56d;
+  font-size: 10px;
+}
+.visit-dates i {
+  width: 35px;
+  height: 1px;
+  background: #657069;
+}
+
+.location-panel {
+  gap: 20px;
+  background: #d8e56d;
+  padding: 25px 30px;
+  margin: 22px 0 48px;
+  border-radius: 4px;
+}
+.section-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #17201d;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 300;
+}
+.location-panel h2 {
+  font-size: 26px;
+  margin: 5px 0 4px;
+}
+.location-panel p {
+  margin: 0;
+  color: #48503e;
+  font-size: 13px;
+}
+.text-link {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 12px;
+  text-decoration: none;
+  border-bottom: 1px solid #17201d;
+  padding-bottom: 4px;
+  white-space: nowrap;
+}
+.text-link span {
+  font-size: 17px;
+  margin-left: 5px;
+}
+
+.visit-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.8fr);
+  gap: 64px;
+}
+.section-heading {
+  justify-content: space-between;
+  border-bottom: 1px solid #cfc8bc;
+  padding-bottom: 13px;
+  margin-bottom: 16px;
+}
+.section-heading h2 {
+  font-size: 36px;
+  margin: 4px 0 0;
+}
+.section-count {
+  color: #7c837b;
+}
+.agenda-item {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 17px;
+  padding: 24px 0;
+  border-bottom: 1px solid #d9d2c6;
+}
+.agenda-index {
+  color: #9a6551;
+  padding-top: 4px;
+}
+.agenda-item h3,
+.update-item h3,
+.place-item h3 {
+  font-size: 16px;
+  margin: 0 0 7px;
+}
+.agenda-item p,
+.update-item p,
+.place-item p {
+  color: #68706a;
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 0;
+}
+.agenda-time {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font:
+    12px "DM Mono",
+    monospace;
+  white-space: nowrap;
+}
+.agenda-time strong {
+  font-weight: 500;
+}
+.agenda-time span {
+  color: #8b918b;
+  font-size: 10px;
+}
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+.update-item {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 12px;
+  padding: 17px 0;
+  border-bottom: 1px solid #d9d2c6;
+}
+.update-dot {
+  background: #9a6551;
+  margin-top: 6px;
+}
+.badge {
+  color: #9a6551;
+  font-size: 9px;
+}
+.update-item h3 {
+  margin-top: 8px;
+}
+.place-item {
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #d9d2c6;
+}
+.place-item h3 {
+  margin-bottom: 4px;
+}
+.place-item p + p {
+  margin-top: 4px;
+  color: #91958e;
+}
+.circle-link {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #b8b1a5;
+  border-radius: 50%;
+  text-decoration: none;
+}
+.empty-state {
+  color: #80867e;
+  font-size: 13px;
+  padding: 20px 0;
+}
+footer {
+  border-top: 1px solid #cfc8bc;
+  margin-top: 70px;
+  padding-top: 20px;
+  color: #8c918b;
+}
+footer span {
+  padding: 0 8px;
+  color: #9a6551;
+}
+.public-visit-state {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: #f4f0e8;
+  color: #17201d;
+  text-align: center;
+}
+.public-visit-state h2 {
+  font-size: 34px;
+  margin: 4px 0;
+}
+.public-visit-state p {
+  color: #68706a;
+}
+.loading-mark {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #d9d2c6;
+  border-top-color: #9a6551;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .public-visit-page {
+    padding: 12px 12px 40px;
+  }
+  .visit-hero {
+    min-height: 440px;
+    padding: 20px 22px 30px;
+  }
+  .hero-content {
+    padding-top: 92px;
+  }
+  h1 {
+    font-size: 50px;
+  }
+  .visit-dates {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    line-height: 1.8;
+  }
+  .location-panel {
+    align-items: flex-start;
+    padding: 22px;
+    margin-bottom: 38px;
+  }
+  .location-panel .section-icon {
+    flex: 0 0 auto;
+  }
+  .text-link {
+    align-self: flex-end;
+  }
+  .visit-grid {
+    display: block;
+  }
+  .side-column {
+    margin-top: 48px;
+  }
+  footer {
+    margin-top: 48px;
+    line-height: 1.8;
+  }
+}
