@@ -498,7 +498,7 @@ const VisitDetails = () => {
               <div style={styles.linkBox}>
                 <input
                   readOnly
-                  value={`http://localhost:5173/visit/${visit.publicToken}`}
+                  value={`${import.meta.env.VITE_FRONTEND_URL}/visit/${visit.publicToken}`}
                   style={styles.linkInput}
                 />
 
