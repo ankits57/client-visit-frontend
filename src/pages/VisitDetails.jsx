@@ -504,7 +504,7 @@ const VisitDetails = () => {
 
                 <button
                   onClick={() => {
-                    const link = `http://localhost:5173/visit/${visit.publicToken}`;
+                    const link = `${import.meta.env.VITE_FRONTEND_URL}/visit/${visit.publicToken}`;
 
                     navigator.clipboard.writeText(link);
 
