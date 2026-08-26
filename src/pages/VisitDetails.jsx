@@ -3,10 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import api from "../api/axios";
 import DashboardLayout from "../components/DashboardLayout";
+import QRCode from "react-qr-code";
 
 const VisitDetails = () => {
   const { visitId } = useParams();
   const navigate = useNavigate();
+  const [showQR, setShowQR] = useState(false);
 
   const [visit, setVisit] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -429,6 +431,10 @@ const VisitDetails = () => {
     }
   };
 
+  const publicUrl = visit?.publicToken
+    ? `${import.meta.env.VITE_FRONTEND_URL}/visit/${visit.publicToken}`
+    : "";
+
   if (loading) {
     return (
       <DashboardLayout>
@@ -510,43 +516,59 @@ const VisitDetails = () => {
 
         {/* Public Link */}
 
+        {/* Client Access */}
+
         <div style={styles.section}>
-          <h3>Client Access Link</h3>
+          <h3>Client Access</h3>
 
-          {visit.publicToken ? (
+          <p>Share this link or QR code with the client.</p>
+
+          {!visit.publicToken ? (
+            <div>
+              <p style={{ color: "#6b7280", marginBottom: "12px" }}>
+                Generate a secure client link first.
+              </p>
+
+              <button onClick={generatePublicLink} style={styles.primaryButton}>
+                Generate Client Link
+              </button>
+            </div>
+          ) : (
             <>
-              <p>Share this link with the client.</p>
-
               <div style={styles.linkBox}>
-                <input
-                  readOnly
-                  value={`${import.meta.env.VITE_FRONTEND_URL}/visit/${visit.publicToken}`}
-                  style={styles.linkInput}
-                />
+                <input readOnly value={publicUrl} style={styles.linkInput} />
 
                 <button
                   onClick={() => {
-                    const link = `${import.meta.env.VITE_FRONTEND_URL}/visit/${visit.publicToken}`;
-
-                    navigator.clipboard.writeText(link);
-
+                    navigator.clipboard.writeText(publicUrl);
                     alert("Link copied!");
                   }}
+                  style={styles.secondaryActionButton}
                 >
                   Copy
                 </button>
               </div>
-            </>
-          ) : (
-            <>
-              <p>No public access link has been generated yet.</p>
 
-              <button
-                onClick={generatePublicLink}
-                style={styles.generateButton}
-              >
-                Generate Public Link
-              </button>
+              <div style={{ marginTop: "15px" }}>
+                <button
+                  onClick={() => setShowQR(!showQR)}
+                  style={styles.primaryButton}
+                >
+                  {showQR ? "Hide QR Code" : "Show QR Code"}
+                </button>
+              </div>
+
+              {showQR && (
+                <div style={styles.qrContainer}>
+                  <div style={styles.qrBox}>
+                    <QRCode value={publicUrl} size={220} />
+                  </div>
+
+                  <p style={styles.qrText}>
+                    Scan this QR code to open the client visit portal.
+                  </p>
+                </div>
+              )}
             </>
           )}
         </div>
@@ -1216,6 +1238,42 @@ const styles = {
   item: {
     borderBottom: "1px solid #eee",
     padding: "15px 0",
+  },
+  primaryButton: {
+    padding: "10px 16px",
+    border: "none",
+    background: "#2563eb",
+    color: "white",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "600",
+  },
+
+  secondaryActionButton: {
+    padding: "10px 16px",
+    border: "1px solid #d1d5db",
+    background: "white",
+    borderRadius: "8px",
+    cursor: "pointer",
+  },
+
+  qrContainer: {
+    marginTop: "25px",
+    textAlign: "center",
+  },
+
+  qrBox: {
+    display: "inline-block",
+    padding: "20px",
+    background: "white",
+    border: "1px solid #e5e7eb",
+    borderRadius: "12px",
+  },
+
+  qrText: {
+    color: "#6b7280",
+    fontSize: "14px",
+    marginTop: "12px",
   },
 
   linkBox: {
