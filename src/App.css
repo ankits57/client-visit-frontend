@@ -857,6 +857,80 @@ footer span {
   background: #f3d9d0;
   border-radius: 2px;
 }
+.visit-details-page {
+  max-width: 980px;
+  color: #17201d;
+}
+.visit-details-page > button {
+  padding: 10px 14px !important;
+  border-radius: 2px !important;
+  cursor: pointer;
+}
+.visit-details-page > button:first-child {
+  color: #69736c;
+}
+.visit-details-page > button:nth-child(2) {
+  color: #f9f6ef !important;
+  background: #17201d !important;
+}
+.visit-details-page > div[style] {
+  background: #fffdf8 !important;
+  border: 1px solid #e2dbcf;
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+.visit-details-page > div[style] h2 {
+  margin-bottom: 8px;
+  font:
+    600 42px "Playfair Display",
+    serif;
+}
+.visit-details-page > div[style] p {
+  color: #737b73;
+  font-size: 13px;
+}
+.visit-details-page > div[style] a {
+  color: #9a6551;
+  font-weight: 700;
+}
+.visit-details-page [style*="background: white"] {
+  background: #fffdf8 !important;
+  border: 1px solid #e2dbcf;
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+.visit-details-page [style*="background: white"] > h3 {
+  font:
+    600 26px "Playfair Display",
+    serif;
+}
+.visit-details-page [style*="display: flex"] input,
+.visit-details-page [style*="display: flex"] textarea,
+.visit-details-page [style*="display: flex"] select,
+.visit-details-page > div[style] input,
+.visit-details-page > div[style] textarea,
+.visit-details-page > div[style] select {
+  max-width: 100%;
+  padding: 12px !important;
+  background: #f8f5ee !important;
+  border: 1px solid #d9d2c6 !important;
+  border-radius: 2px !important;
+  font:
+    14px "Manrope",
+    sans-serif !important;
+}
+.visit-details-page button {
+  border-radius: 2px !important;
+}
+.visit-details-page [style*="background: #2563eb"] {
+  background: #17201d !important;
+}
+.visit-details-page [style*="background: #16a34a"] {
+  background: #9a6551 !important;
+}
+.visit-details-page [style*="background: #dc2626"] {
+  background: #9a3f36 !important;
+}
 .workspace-form-page > h2 {
   margin: 8px 0 6px;
   font-size: 38px;
@@ -1207,6 +1281,22 @@ footer span {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 14px;
+  }
+  .visit-details-page > div[style] h2 {
+    font-size: 34px;
+    overflow-wrap: anywhere;
+  }
+  .visit-details-page > div[style] {
+    padding: 20px !important;
+  }
+  .visit-details-page [style*="padding: 25px"] {
+    padding: 20px !important;
+  }
+  .visit-details-page [style*="display: flex"] button {
+    min-height: 40px;
+  }
+  .visit-details-page [style*="display: flex"] input {
+    width: 100%;
   }
   .visit-details-page > div[style] > div[style] {
     align-items: flex-start !important;

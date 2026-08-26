@@ -74,10 +74,6 @@ const VisitDetails = () => {
   });
 
   const [agendaLoading, setAgendaLoading] = useState(false);
-  useEffect(() => {
-    fetchVisit();
-  }, [visitId]);
-
   const fetchVisit = async () => {
     try {
       setLoading(true);
@@ -96,6 +92,10 @@ const VisitDetails = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchVisit();
+  }, [visitId]);
 
   const handleDeleteVisit = async () => {
     const confirmed = window.confirm(
@@ -1098,16 +1098,6 @@ const styles = {
     justifyContent: "space-between",
     marginBottom: "25px",
   },
-  editButton: {
-    marginLeft: "15px",
-    padding: "8px 14px",
-    border: "none",
-    background: "#2563eb",
-    color: "white",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-
   status: {
     height: "fit-content",
     padding: "6px 12px",
