@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import QRCode from "react-qr-code";
 
 import api from "../api/axios";
+import { toPng } from "html-to-image";
 import "../App.css";
 
 const PublicVisit = () => {
@@ -12,6 +13,7 @@ const PublicVisit = () => {
   const [visit, setVisit] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const qrRef = useRef(null);
 
   useEffect(() => {
     const fetchPublicVisit = async () => {
@@ -34,6 +36,28 @@ const PublicVisit = () => {
 
     fetchPublicVisit();
   }, [token]);
+
+  const downloadQRCode = async () => {
+    if (!qrRef.current) return;
+
+    try {
+      const dataUrl = await toPng(qrRef.current, {
+        pixelRatio: 2,
+      });
+
+      const link = document.createElement("a");
+
+      link.download = `${visit.title}-QR.png`;
+
+      link.href = dataUrl;
+
+      link.click();
+    } catch (err) {
+      console.error("Failed to download QR code:", err);
+
+      alert("Failed to download QR code");
+    }
+  };
 
   if (loading) {
     return (
@@ -66,11 +90,18 @@ const PublicVisit = () => {
 
         {showQR && (
           <div className="qr-container">
-            <div className="qr-box">
-              <QRCode value={publicUrl} size={180} />
+            <div ref={qrRef} className="downloadable-qr">
+              <span className="qr-kicker">ClientVisit guest guide</span>
+              <h3>{visit.title}</h3>
+              <div className="qr-box">
+                <QRCode value={publicUrl} size={180} />
+              </div>
+              <p className="qr-text">Scan to open this visit page.</p>
             </div>
 
-            <p className="qr-text">Scan to open this visit page.</p>
+            <button onClick={downloadQRCode} className="download-qr-button">
+              Download QR code
+            </button>
           </div>
         )}
       </div>

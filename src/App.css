@@ -342,6 +342,29 @@ footer span {
   border-radius: 3px;
   text-align: center;
 }
+.downloadable-qr {
+  display: grid;
+  justify-items: center;
+  padding: 12px;
+  color: #17201d;
+  background: #fffdf8;
+}
+.downloadable-qr h3 {
+  max-width: 260px;
+  margin: 6px 0 14px;
+  font:
+    600 20px "Playfair Display",
+    serif;
+  overflow-wrap: anywhere;
+}
+.qr-kicker {
+  color: #9a6551;
+  font:
+    500 9px "DM Mono",
+    monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 .qr-box {
   display: inline-flex;
   padding: 14px;
@@ -358,6 +381,20 @@ footer span {
   margin: 0;
   color: #737b73;
   font-size: 12px;
+}
+.download-qr-button {
+  padding: 11px 15px;
+  color: #f9f6ef;
+  background: #17201d;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  font:
+    700 11px "Manrope",
+    sans-serif;
+}
+.download-qr-button:hover {
+  background: #9a6551;
 }
 .visit-details-page .qr-container {
   max-width: 280px;
